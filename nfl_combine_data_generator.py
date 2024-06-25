@@ -149,11 +149,18 @@ def main():
     # Define positions
     position_labels = ['WR', 'RB', 'OL', 'CB', 'S', 'TE', 'FB', 'LB', 'DL']
     
+    # Set a minimum proportion for each position
+    min_proportion = 0.01  # Ensure each position has at least 1% representation
+
     # Generate random proportions
+    remaining_proportion = 1.0 - len(position_labels) * min_proportion
     random_proportions = np.random.rand(len(position_labels))
     
     # Normalize the proportions so they add up to 1
-    proportions = random_proportions / random_proportions.sum()
+    proportions = random_proportions / random_proportions.sum() * remaining_proportion
+    
+    # Add the minimum proportion to each position
+    proportions += min_proportion
     
     # Create a dictionary for proportions
     position_proportions = dict(zip(position_labels, proportions))
